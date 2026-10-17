@@ -1,0 +1,23 @@
+[project]
+name = "scanner-portas-banner"
+version = "0.1.0"
+description = "Scanner de portas TCP com banner grabbing (Port scanner + banner grabbing)"
+requires-python = ">=3.10"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Kelvin Oliveira" }]
+dependencies = []
+
+[project.scripts]
+scanner-portas-banner = "scanner_portas_banner.__main__:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
