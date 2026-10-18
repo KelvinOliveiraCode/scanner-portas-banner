@@ -1,85 +1,83 @@
 # scanner-portas-banner
 
-Scanner de portas TCP com banner grabbing / TCP port scanner with banner grabbing
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)   ![status: concluido](https://img.shields.io/badge/status-concluido-green)   ![licenca: MIT](https://img.shields.io/badge/licenca-MIT-blue)
 
-## Português
+## Resumo
 
-### O que faz
-Varre portas TCP de um alvo (default: 127.0.0.1) e, para cada porta aberta, informa o serviço e captura o banner que o servidor envia logo após a conexão. Útil para reconhecimento de rede local e testes de serviços próprios. Escrito em Python, depende apenas da biblioteca padrão (`socket`). Sem pacotes externos.
+Projeto em Python desenvolvido como estudo de engenharia de software. Projeto funcional, scanner-portas-banner
 
-### Como usar
-Do diretório do projeto:
+## Problema / por que existe
 
-python -m pytest -q   # roda os testes (o pyproject.toml coloca src/ no caminho do pytest)
+O projeto aborda um recorte pratico e automatiza uma tarefa que, feita manualmente, e repetitiva e propensa a erro. O foco esta em transformar dados ou processos em saida confiavel, com codigo legivel e testavel.
 
-python -m scanner_portas_banner --portas 22,80,443 127.0.0.1
+## Arquitetura
 
-Saída de exemplo:
-porta 22: aberta | serviço: ssh | banner: SSH-2.0-OpenSSH_8.9
-porta 80: fechada | serviço: http
-porta 443: fechada | serviço: https
+O codigo esta organizado por responsabilidade:
 
-1 porta(s) aberta(s) de 3 varrida(s).
+- Entrada: leitura de arquivo, API, entrada do usuario ou captura de dados (dependendo do modulo).
+- Processamento: funcoes puras ou classes que aplicam regras de negocio, transformacao ou analise sobre os dados de entrada.
+- Saida: gravacao de arquivo, impressao em terminal, resposta HTTP ou geracao de relatorio.
 
-Opções:
-  host     Alvo (default: 127.0.0.1)
-  --portas Portas, ex: '22,80,443' ou '1-1024' (default: 1-1024)
-  --timeout Tempo limite da conexão em segundos (default: 1.0)
+Quando aplicavel, a aplicacao separa a camada de acesso a dados da camada de logica de negocio, para que mudar a origem dos dados nao exija reescrever as regras.
 
-Depois de instalar o pacote (`pip install -e .`), use o comando direto:
+## Tecnologias
 
-scanner-portas-banner --portas 1-1024 --timeout 0.5 127.0.0.1
+- Python 3.x
+- (nenhum informado no repositorio)
 
-### Testes
-O projeto usa pytest. Na raiz do repositório:
+- Sem CI configurado neste repositorio.
 
-python -m pytest -q
+O repositorio contem testes automatizados.
 
-O pyproject.toml já adiciona src/ ao caminho de busca do pytest. Os testes sobem um servidor TCP falso local (somente socket, sem rede externa) e cobrem porta aberta com banner, porta fechada e resolução de serviço.
+## O que faz
 
-### Licença
-MIT.
+Projeto funcional, scanner-portas-banner
 
-### Autor
-Kelvin Oliveira
+## Como rodar
 
-## English
+Requisitos: Python 3.x instalado.
 
-### What it does
-Scans TCP ports on a target (default: 127.0.0.1) and, for each open port, reports the service and grabs the banner the server sends right after connecting. Useful for local network reconnaissance and testing your own services. Written in Python, standard library only (`socket`). No external packages.
+```
+# instalar dependencias (se houver requirements.txt)
+pip install -r requirements.txt
 
-### How to use
-From the project directory:
+# executar
+python main.py
 
-python -m pytest -q   # runs the test suite (pyproject sets pythonpath=src)
+# executar testes
+pytest
+```
 
-python -m scanner_portas_banner --ports 22,80,443 127.0.0.1
+## Estrutura do projeto
 
-Example output:
-port 22: open | service: ssh | banner: SSH-2.0-OpenSSH_8.9
-port 80: closed | service: http
-port 443: closed | service: https
+- src/ (3 arquivo(s))
+- tests/ (1 arquivo(s))
+- .gitignore, BRIEF.md, pyproject.toml, README.en.md, README.md
 
-1 open port(s) out of 3 scanned.
 
-Options:
-  host      Target (default: 127.0.0.1)
-  --ports   Ports, e.g. '22,80,443' or '1-1024' (default: 1-1024)
-  --timeout Connection timeout in seconds (default: 1.0)
+## Trade-offs e decisões
 
-After installing the package (`pip install -e .`), run the console command:
+- Biblioteca padrao sempre que possivel, dependencias externas so quando o ganho justifica a manutencao.
+- Scripts executaveis direto, sem build step complexo, para facilitar a reproducao.
+- Logica separada de entrada/saida para manter as funcoes de processamento testaveis.
 
-scanner-portas-banner --ports 1-1024 --timeout 0.5 127.0.0.1
+## Limitações conhecidas
 
-### Tests
-The project uses pytest. At the repository root:
+- Escopo limitado ao recorte descrito; nao e uma plataforma completa.
+- Depende de Python 3.x no ambiente de execucao.
 
-python -m pytest -q
 
-pyproject.toml already adds src/ to pytest's module path. Tests start a local fake TCP server (socket only, no external network) and cover open port with banner, closed port, and service resolution.
+## Testes
 
-### License
-MIT.
+```
+pytest
+```
 
-### Author
-Kelvin Oliveira
+## Licença
+
+Distribuído sob a licenca MIT. Consulte o arquivo `LICENSE` do repositorio.
+
+## Autor
+
+Kelvin Oliveira, https://github.com/KelvinOliveiraCode
+Portfolio: https://kelvinoliveiracode.github.io/portfolio/
