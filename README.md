@@ -1,118 +1,94 @@
 # scanner-portas-banner
 
-<div align="center">
-
 [English](README.en.md) · **Português (Brasil)**
 
-</div>
-
-[![Python 3](https://img.shields.io/badge/Python-3.x-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn)](https://scikit-learn.org/) [![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas)](https://pandas.pydata.org/) [![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest)](https://docs.pytest.org/) [![MIT License](https://img.shields.io/badge/License-MIT-f4c430?style=flat-square)](LICENSE)
-
-### Projeto funcional ,  scanner-portas-banner
-
----
+[![Python 3](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](#) [![pytest](https://img.shields.io/badge/pytest-5%20testes-0A9EDC?style=flat-square&logo=pytest)](#) [![MIT License](https://img.shields.io/badge/License-MIT-f4c430?style=flat-square)](LICENSE)
 
 ## O que é
 
-Projeto funcional ,  scanner-portas-banner
+**Scanner de portas TCP com captura de banner**: conecta em portas de um alvo, identifica o **serviço** por porta conhecida, **captura o banner** do serviço (quando disponível) e reporta portas abertas/fechadas. É um laboratório educacional de segurança em Python puro (socket/stdlib).
 
----
+## ⚠️ Aviso de uso ético e legal
 
-## Início Rápido
+Use **apenas em redes e hosts próprios** ou com autorização expressa do responsável. Varredura de portas em sistemas de terceiros sem permissão pode ser ilegal (vulnerability scanning não autorizado).
 
-```bash
-# Clone e entre
-git clone https://github.com/KelvinOliveiraCode/<repo>.git
-cd <repo>
+## Status
 
-# Instale dependências
-# Nenhum requirements.txt detectado
+Laboratório educacional funcional e testado (5 testes).
 
-# Execute o projeto
-python main.py
+## Funcionalidades
 
-# Execute os testes
-pytest
+- **Scan de porta** (`scan_port`): conecta TCP em host:porta com timeout; retorna `PortResult` (aberta/fechada).
+- **Captura de banner** (`_grab_banner`): lê o banner do serviço após conectar (quando o serviço o envia).
+- **Resolução de serviço** (`resolve_service`): nome do serviço conhecido pela porta (ex.: 80→http, 22→ssh).
+- **Varredura de faixa** (`scan_ports`): aplica o scan a uma lista de portas.
+- **CLI**: `scanner-portas-banner [host] --ports 80,443,1000-2000 [--timeout S]` (host default 127.0.0.1, portas default 1-1024).
+
+## Arquitetura
+
+Pacote `scanner_portas_banner` com `scanner.py` (scan + banner) e `__main__.py` (CLI, parse da spec de portas).
+
+```mermaid
+flowchart LR
+    ALVO[host + portas] --> SP[scan_port - TCP connect]
+    SP --> GB[_grab_banner - banner do serviço]
+    SP --> RS[resolve_service - porta -> nome]
+    RS --> PR[PortResult por porta]
+    CLI[scanner-portas-banner] --> SP
 ```
 
-## Como funciona
+## Stack
 
-Estrutura limpa e modular com separação de responsabilidades.
+- Python ≥ 3.10, stdlib apenas (socket)
+- pytest (dev)
 
----
+## Estrutura do repositório
 
-## Capacidades
+```
+scanner-portas-banner/
+├── pyproject.toml · BRIEF.md
+├── src/scanner_portas_banner/
+│   ├── scanner.py    # scan + banner + serviço
+│   └── __main__.py   # CLI
+├── tests/            # 5 testes
+└── LICENSE           # MIT
+```
 
-| Capacidade | Descrição |
-|------------|-------------|
-| Carregamento de Dados | Auto-download do TensorFlow creditcard.csv (284k transações) com cache local |
-| EDA e Visualização | Distribuição de classes, histogramas de Amount, heatmaps de correlação (matplotlib/seaborn) |
-| Pré-processamento | RobustScaler em Amount/Time, split estratificado, remoção de duplicatas |
-| Balanceamento | SMOTE oversampling (fallback: class_weight="balanced") |
-| Modelagem | LogisticRegression, RandomForest, ExtraTrees com RandomizedSearchCV (StratifiedKFold) |
-| Métricas | Accuracy, Precision, Recall, F1, ROC AUC, Specificity, Confusion Matrix |
-| Seleção | Score ponderado: Recall 40% + F1 30% + Precision 20% + Accuracy 10% |
-| Persistência | Serialização joblib para modelo, scaler e resultados completos |
+## Pré-requisitos e instalação
 
+```bash
+pip install -e .
+```
 
----
+## Como executar
 
+```bash
+scanner-portas-banner 127.0.0.1 --ports 80,443,8080 --timeout 2
+```
 
+## Testes e qualidade
 
----
+Comando real (verificado pelo agente):
 
-## Perguntas Frequentes
+```bash
+PYTHONPATH=src python -m pytest tests/
+# 5 passed
+```
 
-<details>
-<summary><strong>O que é este projeto?</strong></summary>
+## Decisões técnicas e trade-offs
 
-Um estudo/projeto em Python demonstrando conceitos fundamentais.
+- **Connect scan simples**: um TCP connect por porta — direto e didático; mais ruidoso que SYN scan e sem paralelismo.
+- **Banner grab opcional**: identificação extra de versão/serviço; nem todo serviço envia banner.
 
-</details>
+## Limitações conhecidas e roadmap
 
-<details>
-<summary><strong>Como executar?</strong></summary>
+- Scan sequencial (sem threads/asyncio) — lento para faixas grandes.
+- Sem detecção de firewall/IDS, sem varredura UDP.
 
-Veja [Início Rápido](#início-rápido) para comandos copiáveis.
+## Processo de desenvolvimento
 
-</details>
+Projeto individual de Kelvin Oliveira, construído com agentes de IA orquestrados e revisado pelo autor.
 
-<details>
-<summary><strong>Há testes?</strong></summary>
+## Licença e autor
 
-Nenhum teste automatizado neste repositório.
-
-</details>
-
-<details>
-<summary><strong>Posso usar em produção?</strong></summary>
-
-Este é um **projeto de estudo/portfólio**. Revise e endureça (auth, persistência, monitoramento, etc.) antes de usar em produção.
-
-</details>
-
-
-
----
-
-## Documentação
-
-- **Código-Fonte** ,  Navegue pelo diretório `src/` para detalhes de implementação
-- **Referência da API** ,  Docstrings inline + type hints
-- **Diagrama de Arquitetura** ,  Veja [architecture.mermaid](docs/architecture.mermaid) (se presente)
-- **Changelog** ,  [CHANGELOG.md](CHANGELOG.md) (se presente)
-- **Contribuindo** ,  [CONTRIBUTING.md](CONTRIBUTING.md) (se presente)
-
-## Licença
-
-[MIT](LICENSE) ,  Kelvin Oliveira
-
----
-
-<div align="center">
-
-**Construído com** · Python 3 + scikit-learn + pandas
-
-**Autor** · [Kelvin Oliveira](https://github.com/KelvinOliveiraCode) · [Portfolio](https://kelvinoliveiracode.github.io/portfolio/)
-
-</div>
+MIT — Copyright (c) 2026 Kelvin Rebelo de Oliveira. Autor: [Kelvin Oliveira](https://github.com/KelvinOliveiraCode) · [Portfólio](https://kelvinoliveiracode.github.io/portfolio/)
