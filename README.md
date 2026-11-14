@@ -8,7 +8,7 @@
 
 **Scanner de portas TCP com captura de banner**: conecta em portas de um alvo, identifica o **serviço** por porta conhecida, **captura o banner** do serviço (quando disponível) e reporta portas abertas/fechadas. É um laboratório educacional de segurança em Python puro (socket/stdlib).
 
-## ⚠️ Aviso de uso ético e legal
+## ️ Aviso de uso ético e legal
 
 Use **apenas em redes e hosts próprios** ou com autorização expressa do responsável. Varredura de portas em sistemas de terceiros sem permissão pode ser ilegal (vulnerability scanning não autorizado).
 
@@ -22,7 +22,7 @@ Laboratório educacional funcional e testado (5 testes).
 - **Captura de banner** (`_grab_banner`): lê o banner do serviço após conectar (quando o serviço o envia).
 - **Resolução de serviço** (`resolve_service`): nome do serviço conhecido pela porta (ex.: 80→http, 22→ssh).
 - **Varredura de faixa** (`scan_ports`): aplica o scan a uma lista de portas.
-- **CLI**: `scanner-portas-banner [host] --ports 80,443,1000-2000 [--timeout S]` (host default 127.0.0.1, portas default 1-1024).
+- CLI: `scanner-portas-banner [host] --ports 80,443,1000-2000 [--timeout S]` (host default 127.0.0.1, portas default 1-1024).
 
 ## Arquitetura
 
@@ -44,7 +44,7 @@ flowchart LR
 
 ## Estrutura do repositório
 
-```
+```text
 scanner-portas-banner/
 ├── pyproject.toml · BRIEF.md
 ├── src/scanner_portas_banner/
@@ -77,12 +77,12 @@ PYTHONPATH=src python -m pytest tests/
 
 ## Decisões técnicas e trade-offs
 
-- **Connect scan simples**: um TCP connect por porta — direto e didático; mais ruidoso que SYN scan e sem paralelismo.
-- **Banner grab opcional**: identificação extra de versão/serviço; nem todo serviço envia banner.
+- Connect scan simples: um TCP connect por porta, direto e didático; mais ruidoso que SYN scan e sem paralelismo.
+- Banner grab opcional: identificação extra de versão/serviço; nem todo serviço envia banner.
 
 ## Limitações conhecidas e roadmap
 
-- Scan sequencial (sem threads/asyncio) — lento para faixas grandes.
+- Scan sequencial (sem threads/asyncio), lento para faixas grandes.
 - Sem detecção de firewall/IDS, sem varredura UDP.
 
 ## Processo de desenvolvimento
@@ -91,4 +91,4 @@ Projeto individual de Kelvin Oliveira, construído com agentes de IA orquestrado
 
 ## Licença e autor
 
-MIT — Copyright (c) 2026 Kelvin Rebelo de Oliveira. Autor: [Kelvin Oliveira](https://github.com/KelvinOliveiraCode) · [Portfólio](https://kelvinoliveiracode.github.io/portfolio/)
+MIT. Copyright (c) 2026 Kelvin Rebelo de Oliveira. Autor: [Kelvin Oliveira](https://github.com/KelvinOliveiraCode) · [Portfólio](https://kelvinoliveiracode.github.io/portfolio/)

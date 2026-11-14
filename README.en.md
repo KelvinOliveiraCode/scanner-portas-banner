@@ -8,7 +8,7 @@
 
 **A TCP port scanner with banner grabbing**: it connects to ports on a target, identifies the **service** by well-known port, **grabs the service banner** (when available) and reports open/closed ports. It is an educational security lab in pure Python (socket/stdlib).
 
-## ⚠️ Ethical and legal use warning
+## ️ Ethical and legal use warning
 
 Use it **only on your own networks and hosts** or with the responsible party's express authorisation. Port scanning third-party systems without permission may be illegal (unauthorised vulnerability scanning).
 
@@ -22,7 +22,7 @@ An educational lab, working and tested (5 tests).
 - **Banner grabbing** (`_grab_banner`): reads the service banner after connecting (when the service sends one).
 - **Service resolution** (`resolve_service`): the well-known service name for a port (e.g. 80→http, 22→ssh).
 - **Range scanning** (`scan_ports`): applies the scan to a list of ports.
-- **CLI**: `scanner-portas-banner [host] --ports 80,443,1000-2000 [--timeout S]` (host default 127.0.0.1, ports default 1-1024).
+- CLI: `scanner-portas-banner [host] --ports 80,443,1000-2000 [--timeout S]` (host default 127.0.0.1, ports default 1-1024).
 
 ## Architecture
 
@@ -44,7 +44,7 @@ flowchart LR
 
 ## Repository layout
 
-```
+```text
 scanner-portas-banner/
 ├── pyproject.toml · BRIEF.md
 ├── src/scanner_portas_banner/
@@ -77,12 +77,12 @@ PYTHONPATH=src python -m pytest tests/
 
 ## Technical decisions and trade-offs
 
-- **Simple connect scan**: one TCP connect per port — direct and didactic; noisier than a SYN scan and no parallelism.
-- **Optional banner grab**: extra version/service identification; not every service sends a banner.
+- Simple connect scan: one TCP connect per port, direct and didactic; noisier than a SYN scan and no parallelism.
+- Optional banner grab: extra version/service identification; not every service sends a banner.
 
 ## Known limitations and roadmap
 
-- Sequential scanning (no threads/asyncio) — slow for large ranges.
+- Sequential scanning (no threads/asyncio), slow for large ranges.
 - No firewall/IDS detection, no UDP scanning.
 
 ## Development process
@@ -91,4 +91,4 @@ An individual project by Kelvin Oliveira, built with orchestrated AI agents and 
 
 ## License and author
 
-MIT — Copyright (c) 2026 Kelvin Rebelo de Oliveira. Author: [Kelvin Oliveira](https://github.com/KelvinOliveiraCode) · [Portfolio](https://kelvinoliveiracode.github.io/portfolio/)
+MIT. Copyright (c) 2026 Kelvin Rebelo de Oliveira. Author: [Kelvin Oliveira](https://github.com/KelvinOliveiraCode) · [Portfolio](https://kelvinoliveiracode.github.io/portfolio/)
